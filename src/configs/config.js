@@ -1,11 +1,13 @@
 const config = {
-  edge_url: process.env.VUE_APP_EDGE_URL || "",
-  cloud_url: process.env.VUE_APP_CLOUD_URL || "",
-};
+    edgeUrl: process.env.VUE_APP_EDGE_URL || '',
+    cloudRegion: process.env.VUE_APP_CLOUD_REGION || '',
+    cloudAccessKeyID: process.env.VUE_APP_ACCESS_KEY_ID || '',
+    cloudSecretAccessKey: process.env.VUE_APP_SECRET_ACCESS_KEY || '',
+    cloudEndpointName: process.env.VUE_APP_ENDPOINT_NAME || '',
+}
 
-console.log("===========");
-console.log(config.edge_url);
-console.log(config.cloud_url);
-console.log("===========");
+console.log('===========')
+console.log(config)
+console.log('===========')
 
-export default config;
+export default config
