@@ -4,7 +4,7 @@ defineProps(['title'])
 
 const selectedFile = ref(null) // Variable to store the selected file
 const thumbnail = ref(null) // Variable to store the thumbnail Data URL
-
+const base64Image = ref('')
 const previewImage = (event) => {
     const file = event.target.files[0]
     if (file) {
@@ -12,12 +12,13 @@ const previewImage = (event) => {
         const reader = new FileReader()
         reader.onload = (e) => {
             thumbnail.value = e.target.result // Store the Data URL for thumbnail preview
+            base64Image.value = reader.result.split(',')[1] // Removes the data:image part
         }
         reader.readAsDataURL(file)
     }
 }
 defineExpose({
-    selectedFile,
+    base64Image,
 })
 </script>
 <template>
@@ -35,7 +36,7 @@ defineExpose({
 <style scoped>
 .upload-card {
     width: 300px;
-    height: 300px;
+    /* height: 300px; */
     margin: 20px;
     padding: 20px;
     text-align: center;
@@ -60,8 +61,9 @@ defineExpose({
 
 .thumbnail {
     max-width: 100%;
-    height: auto;
+    max-height: 100%;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    object-fit: contain;
 }
 </style>

@@ -11,7 +11,9 @@
         <div class="edge-card">
             <ImageSubmit
                 :isDisabled="!originalImgFile || isEdgeDisabled"
+                :api="queryService.edgePeopleCounting"
                 :originalImgFile="originalImgFile"
+                :modelSize="'yolov8n'"
                 @disableEdge="disableEdge"
                 @enableEdge="enableEdge"
                 title="Edge: yolov8n"
@@ -24,9 +26,10 @@
 import ImageSubmit from './components/ImageSubmit.vue'
 import ImageUpload from './components/ImageUpload.vue'
 import { ref, computed } from 'vue'
-const originalImg = ref({ selectedFile: null })
+import queryService from './service/api'
+const originalImg = ref({ base64Image: '' })
 const originalImgFile = computed(() => {
-    return originalImg.value.selectedFile
+    return originalImg.value.base64Image
 })
 const isEdgeDisabled = ref(false)
 const disableEdge = () => {

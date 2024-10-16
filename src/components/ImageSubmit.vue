@@ -1,22 +1,38 @@
 <script setup>
-import { ref, defineExpose } from 'vue'
-const props = defineProps(['title', 'isDisabled', 'originalImgFile'])
+import { computed, ref } from 'vue'
+const props = defineProps([
+    'title',
+    'isDisabled',
+    'originalImgFile',
+    'api',
+    'modelSize',
+])
 const emit = defineEmits(['disableEdge', 'enableEdge'])
-const responseImg = ref(null) // Variable to store the thumbnail Data URL
+const responseImg = ref('') // Variable to store the thumbnail Data URL
+const totalTime = ref(0)
 const loading = ref(false)
-const submitImage = (event) => {
+const responseImgSrc = computed(() => {
+    return `data:image/jpeg;base64,${responseImg.value}`
+})
+const submitImage = async (event) => {
     loading.value = true
-    console.log(props.originalImgFile)
     emit('disableEdge')
-    setTimeout(() => {
-        loading.value = false
-        emit('enableEdge')
-        const reader = new FileReader()
-        reader.onload = (e) => {
-            responseImg.value = e.target.result // Store the Data URL for thumbnail preview
-        }
-        reader.readAsDataURL(props.originalImgFile)
-    }, 3000)
+    const response = await props
+        .api(props.originalImgFile, props.modelSize)
+        .then(({ data, responseTime }) => {
+            console.log(data)
+            responseImg.value = data.predicted_image
+            totalTime.value = responseTime
+        })
+        .catch((err) => {
+            console.log(err.message)
+        })
+    loading.value = false
+    emit('enableEdge')
+    //      setTimeout(() => {
+    //     loading.value = false
+    //     emit('enableEdge')
+    // }, 3000)
 }
 const previewImage = (event) => {
     const file = event.target.files[0]
@@ -29,9 +45,6 @@ const previewImage = (event) => {
         reader.readAsDataURL(file)
     }
 }
-// defineExpose({
-//     selectedFile,
-// })
 </script>
 <template>
     <div class="submit-card">
@@ -41,9 +54,10 @@ const previewImage = (event) => {
         </div>
         <div class="card">
             <div class="thumbnail-preview">
+                <div>Response Time: {{ totalTime }} ms</div>
                 <img
                     v-if="!loading"
-                    :src="responseImg"
+                    :src="responseImgSrc"
                     alt="Response Image"
                     class="thumbnail"
                 />
@@ -56,7 +70,7 @@ const previewImage = (event) => {
 <style scoped>
 .submit-card {
     width: 300px;
-    height: 300px;
+    /* height: 300px; */
     margin: 20px;
     padding: 20px;
     text-align: center;

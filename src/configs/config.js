@@ -1,9 +1,9 @@
 const config = {
-    edgeUrl: process.env.VUE_APP_EDGE_URL || '',
-    cloudRegion: process.env.VUE_APP_CLOUD_REGION || '',
-    cloudAccessKeyID: process.env.VUE_APP_ACCESS_KEY_ID || '',
-    cloudSecretAccessKey: process.env.VUE_APP_SECRET_ACCESS_KEY || '',
-    cloudEndpointName: process.env.VUE_APP_ENDPOINT_NAME || '',
+    edgeUrl: import.meta.env.VITE_EDGE_URL || '',
+    cloudRegion: import.meta.env.VITE_CLOUD_REGION || '',
+    cloudAccessKeyID: import.meta.env.VITE_ACCESS_KEY_ID || '',
+    cloudSecretAccessKey: import.meta.env.VITE_SECRET_ACCESS_KEY || '',
+    cloudEndpointName: import.meta.env.VITE_ENDPOINT_NAME || '',
 }
 
 console.log('===========')
