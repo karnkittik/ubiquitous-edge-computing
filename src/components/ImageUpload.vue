@@ -35,24 +35,26 @@ defineExpose({
 
 <style scoped>
 .upload-card {
-    width: 300px;
-    /* height: 300px; */
+    width: 260px;
+    min-height: 260px;
     margin: 20px;
     padding: 20px;
     text-align: center;
-    border: 1px solid #ddd;
+    /* border: 1px solid #ddd; */
     border-radius: 8px;
-    background-color: #f9f9f9;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    /* background-color: #f9f9f9; */
+    /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
 }
 
 .title {
     font-size: 24px;
     color: #333;
+    margin-bottom: 10px;
 }
 
 .card {
-    padding: 20px;
+    padding: 0;
+    overflow: hidden;
 }
 
 .thumbnail-preview {

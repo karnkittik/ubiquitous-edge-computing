@@ -5,7 +5,7 @@
         technique (YOLOv8) on different computing services.
     </p>
     <div class="card-pane">
-        <div class="upload-card">
+        <div class="upload-pane">
             <ImageUpload title="Original Image" ref="originalImg" />
         </div>
         <div class="edge-card">
@@ -13,10 +13,20 @@
                 :isDisabled="!originalImgFile || isEdgeDisabled"
                 :api="queryService.edgePeopleCounting"
                 :originalImgFile="originalImgFile"
-                :modelSize="'yolov8n'"
                 @disableEdge="disableEdge"
                 @enableEdge="enableEdge"
-                title="Edge: yolov8n"
+                title="Cloud"
+            />
+            <ImageSubmit
+                v-for="edgeService in edgeServices"
+                :key="edgeService.id"
+                :isDisabled="!originalImgFile || isEdgeDisabled"
+                :api="queryService.edgePeopleCounting"
+                :originalImgFile="originalImgFile"
+                :modelSize="edgeService.modelSize"
+                @disableEdge="disableEdge"
+                @enableEdge="enableEdge"
+                :title="`Edge:${edgeService.modelSize}`"
             />
         </div>
     </div>
@@ -38,12 +48,30 @@ const disableEdge = () => {
 const enableEdge = () => {
     isEdgeDisabled.value = false
 }
+const edgeServices = ref([
+    { id: 1, modelSize: 'yolov8n' },
+    { id: 2, modelSize: 'yolov8s' },
+    { id: 3, modelSize: 'yolov8m' },
+    { id: 4, modelSize: 'yolov8l' },
+    { id: 5, modelSize: 'yolov8x' },
+])
 </script>
 
 <style scoped>
 .card-pane {
     display: flex;
     flex-direction: rows;
-    background-color: red;
+    /* background-color: red; */
+}
+.upload-pane {
+    justify-content: flex-end;
+    /* background-color: blue; */
+}
+.edge-card {
+    display: flex;
+    flex-direction: rows;
+    /* background-color: yellow; */
+    max-width: 100%;
+    flex-wrap: wrap;
 }
 </style>

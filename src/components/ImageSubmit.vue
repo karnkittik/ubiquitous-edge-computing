@@ -11,6 +11,14 @@ const emit = defineEmits(['disableEdge', 'enableEdge'])
 const responseImg = ref('') // Variable to store the thumbnail Data URL
 const totalTime = ref(0)
 const loading = ref(false)
+const rawData = ref(null)
+const defaultInfo = {
+    peopleCount: '-',
+    processingTime: '-',
+    responseTime: '-',
+    delay: '-',
+}
+const info = ref(defaultInfo)
 const responseImgSrc = computed(() => {
     return `data:image/jpeg;base64,${responseImg.value}`
 })
@@ -20,30 +28,27 @@ const submitImage = async (event) => {
     const response = await props
         .api(props.originalImgFile, props.modelSize)
         .then(({ data, responseTime }) => {
-            console.log(data)
+            rawData.value = data
+            info.value = {
+                peopleCount: data.detections || '-',
+                processingTime: `${(data.processing_time * 1000).toFixed(
+                    3
+                )} ms`,
+                responseTime: `${responseTime.toFixed(3)} ms`,
+                delay: `${(responseTime - data.processing_time * 1000).toFixed(
+                    3
+                )} ms`,
+            }
             responseImg.value = data.predicted_image
             totalTime.value = responseTime
         })
         .catch((err) => {
+            info.value = defaultInfo
+            responseImg.value = ''
             console.log(err.message)
         })
     loading.value = false
     emit('enableEdge')
-    //      setTimeout(() => {
-    //     loading.value = false
-    //     emit('enableEdge')
-    // }, 3000)
-}
-const previewImage = (event) => {
-    const file = event.target.files[0]
-    if (file) {
-        selectedFile.value = file // Store the selected file
-        const reader = new FileReader()
-        reader.onload = (e) => {
-            thumbnail.value = e.target.result // Store the Data URL for thumbnail preview
-        }
-        reader.readAsDataURL(file)
-    }
 }
 </script>
 <template>
@@ -53,8 +58,27 @@ const previewImage = (event) => {
             <button :disabled="isDisabled" @click="submitImage">Submit</button>
         </div>
         <div class="card">
+            <table class="card-table">
+                <tbody>
+                    <tr>
+                        <td>Detect</td>
+                        <td class="table-value">{{ info.peopleCount }}</td>
+                    </tr>
+                    <tr>
+                        <td>Response Time</td>
+                        <td class="table-value">{{ info.responseTime }}</td>
+                    </tr>
+                    <tr>
+                        <td>Processing Time</td>
+                        <td class="table-value">{{ info.processingTime }}</td>
+                    </tr>
+                    <tr>
+                        <td>Est. Delay</td>
+                        <td class="table-value">{{ info.delay }}</td>
+                    </tr>
+                </tbody>
+            </table>
             <div class="thumbnail-preview">
-                <div>Response Time: {{ totalTime }} ms</div>
                 <img
                     v-if="!loading"
                     :src="responseImgSrc"
@@ -69,7 +93,7 @@ const previewImage = (event) => {
 
 <style scoped>
 .submit-card {
-    width: 300px;
+    width: 260px;
     /* height: 300px; */
     margin: 20px;
     padding: 20px;
@@ -87,13 +111,19 @@ const previewImage = (event) => {
 }
 
 .title {
-    padding: 0 20px;
+    margin-bottom: 10px;
     font-size: 24px;
     color: #333;
 }
-
+.table-value {
+    padding-left: 5px;
+}
 .card {
-    padding: 20px;
+    padding: 0;
+}
+
+.card-table {
+    text-align: left;
 }
 
 .thumbnail-preview {
