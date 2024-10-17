@@ -11,7 +11,7 @@
         <div class="edge-card">
             <ImageSubmit
                 :isDisabled="!originalImgFile || isEdgeDisabled"
-                :api="queryService.edgePeopleCounting"
+                :api="queryService.cloudPeopleCounting"
                 :originalImgFile="originalImgFile"
                 @disableEdge="disableEdge"
                 @enableEdge="enableEdge"

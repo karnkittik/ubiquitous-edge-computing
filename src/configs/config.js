@@ -6,8 +6,8 @@ const config = {
     cloudEndpointName: import.meta.env.VITE_ENDPOINT_NAME || '',
 }
 
-console.log('===========')
-console.log(config)
-console.log('===========')
+// console.log('===========')
+// console.log(config)
+// console.log('===========')
 
 export default config
