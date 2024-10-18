@@ -48,7 +48,8 @@ const InvokeEndpoint = (base64Image) => {
             const command = new InvokeEndpointCommand(params)
             const response = await client.send(command)
             const responseTime = new Date().getTime() - requestStartedAt
-            const responseData = await new Response(response.Body).json()            resolve({ data: responseData.data, responseTime })
+            const responseData = await new Response(response.Body).json()
+            resolve({ data: responseData.data, responseTime })
         } catch (error) {
             console.error('Error invoking endpoint:', error)
             reject(error)

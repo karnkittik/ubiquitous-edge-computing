@@ -1,5 +1,5 @@
 <script setup>
-import { ref, defineExpose } from 'vue'
+import { ref } from 'vue'
 defineProps(['title'])
 
 const selectedFile = ref(null) // Variable to store the selected file
