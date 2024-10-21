@@ -6,7 +6,7 @@ import argparse
 # Set up argument parser for the RTSP URL and server address
 parser = argparse.ArgumentParser(description="RTSP Object Detection with YOLOv8")
 parser.add_argument('--rtsp_url', type=str, required=True, help="RTSP URL of the camera stream")
-parser.add_argument('--server_ip', type=str, default='192.168.10.50', help="IP address of the server")
+parser.add_argument('--server_ip', type=str, help="IP address of the server")
 parser.add_argument('--server_port', type=int, default=12345, help="Port number of the server")
 args = parser.parse_args()
 
