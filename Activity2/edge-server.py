@@ -21,10 +21,10 @@ def load_models():
     for model_size in model_sizes:
         try:
             # Load the YOLOv8 model with the specified size
-            loaded_models[model_size] = YOLO(f'../model/{model_size.split(".")[0]}_ncnn_model',task="detect")
+            loaded_models[model_size] = YOLO(f"../model/{model_size.split('.')[0]}_ncnn_model",task="detect")
             print(f"Loaded model: {model_size}")
         except Exception as e:
-            print(f"Failed to load model {model_size.split(".")[0]}_ncnn_model: {e}")
+            print(f"Failed to load model {model_size.split('.')[0]}_ncnn_model: {e}")
 
 @app.route('/predict/<model_size>', methods=['POST'])
 def predict(model_size):

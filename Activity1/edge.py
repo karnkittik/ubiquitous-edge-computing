@@ -15,7 +15,7 @@ sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 server_address = (args.server_ip, args.server_port)
 
 # Load the YOLOv8 model
-model = YOLO('yolov8n_ncnn_model', task='detect') 
+model = YOLO('../model/yolov8n_ncnn_model', task='detect') 
 
 # You can customize NMS parameters here
 nms_conf = 0.25  # Confidence threshold for NMS
