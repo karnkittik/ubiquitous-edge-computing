@@ -1,33 +1,35 @@
 <template>
-    <h1 class="TTPD">Welcome to People Counting Services</h1>
-    <p>
-        This service provides counting of people using an image processing
-        technique (YOLOv8) on different computing services.
-    </p>
-    <div class="card-pane">
-        <div class="upload-pane">
-            <ImageUpload title="Original Image" ref="originalImg" />
-        </div>
-        <div class="edge-card">
-            <ImageSubmit
-                :isDisabled="!originalImgFile || isEdgeDisabled"
-                :api="queryService.cloudPeopleCounting"
-                :originalImgFile="originalImgFile"
-                @disableEdge="disableEdge"
-                @enableEdge="enableEdge"
-                title="Cloud"
-            />
-            <ImageSubmit
-                v-for="edgeService in edgeServices"
-                :key="edgeService.id"
-                :isDisabled="!originalImgFile || isEdgeDisabled"
-                :api="queryService.edgePeopleCounting"
-                :originalImgFile="originalImgFile"
-                :modelSize="edgeService.modelSize"
-                @disableEdge="disableEdge"
-                @enableEdge="enableEdge"
-                :title="`Edge:${edgeService.modelSize}`"
-            />
+    <div>
+        <h1 class="TTPD">Welcome to People Counting Services</h1>
+        <p class="you-left-your-typewriter-at-my-apateu">
+            This service provides counting of people using an image processing
+            technique (YOLOv8) on different computing services and model size.
+        </p>
+        <div class="card-pane">
+            <div class="upload-pane">
+                <ImageUpload title="Original Image" ref="originalImg" />
+            </div>
+            <div class="edge-card">
+                <ImageSubmit
+                    :isDisabled="!originalImgFile || isEdgeDisabled"
+                    :api="queryService.cloudPeopleCounting"
+                    :originalImgFile="originalImgFile"
+                    @disableEdge="disableEdge"
+                    @enableEdge="enableEdge"
+                    title="Cloud"
+                />
+                <ImageSubmit
+                    v-for="edgeService in edgeServices"
+                    :key="edgeService.id"
+                    :isDisabled="!originalImgFile || isEdgeDisabled"
+                    :api="queryService.edgePeopleCounting"
+                    :originalImgFile="originalImgFile"
+                    :modelSize="edgeService.modelSize"
+                    @disableEdge="disableEdge"
+                    @enableEdge="enableEdge"
+                    :title="`Edge:${edgeService.modelSize}`"
+                />
+            </div>
         </div>
     </div>
 </template>
@@ -52,8 +54,9 @@ const edgeServices = ref([
     { id: 1, modelSize: 'yolov8n' },
     { id: 2, modelSize: 'yolov8s' },
     { id: 3, modelSize: 'yolov8m' },
-    { id: 4, modelSize: 'yolov8l' },
-    { id: 5, modelSize: 'yolov8x' },
+    // Too large for Pi (RAM 2GB)
+    // { id: 4, modelSize: 'yolov8l' },
+    // { id: 5, modelSize: 'yolov8x' },
 ])
 </script>
 

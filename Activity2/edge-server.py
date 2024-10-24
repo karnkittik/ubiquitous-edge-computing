@@ -15,7 +15,8 @@ nms_conf = 0.25  # Confidence threshold for NMS
 nms_iou = 0.45   # IoU threshold for NMS
 
 # List of model sizes to load
-model_sizes = ['yolov8n.pt', 'yolov8s.pt', 'yolov8m.pt', 'yolov8l.pt', 'yolov8x.pt']  # Add your models here
+# model_sizes = ['yolov8n.pt', 'yolov8s.pt', 'yolov8m.pt', 'yolov8l.pt', 'yolov8x.pt']  # Add your models here
+model_sizes = ['yolov8n.pt', 'yolov8s.pt', 'yolov8m.pt']  # Add your models here
 
 def load_models():
     for model_size in model_sizes:
@@ -51,6 +52,8 @@ def predict(model_size):
     # Perform inference on the image
     results = model.predict(image, conf=nms_conf, iou=nms_iou, classes=[0])
 
+    del model
+    
     # Process results and draw bounding boxes on the image
     for result in results:
         image = result.plot()  # This will draw bounding boxes on the image

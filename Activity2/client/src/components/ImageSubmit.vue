@@ -65,16 +65,12 @@ const submitImage = async (event) => {
                         <td class="table-value">{{ info.peopleCount }}</td>
                     </tr>
                     <tr>
-                        <td>Response Time</td>
+                        <td>Response Time (ms)</td>
                         <td class="table-value">{{ info.responseTime }}</td>
                     </tr>
                     <tr>
-                        <td>Processing Time</td>
+                        <td>Processing Time (ms)</td>
                         <td class="table-value">{{ info.processingTime }}</td>
-                    </tr>
-                    <tr>
-                        <td>Est. Delay</td>
-                        <td class="table-value">{{ info.delay }}</td>
                     </tr>
                 </tbody>
             </table>

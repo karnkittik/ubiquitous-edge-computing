@@ -24,8 +24,14 @@ defineExpose({
 <template>
     <div class="upload-card">
         <h1 class="title">{{ title }}</h1>
+        <p class="note">File size should not exceed 5 MB</p>
         <div class="card">
-            <input type="file" accept="image/*" @change="previewImage" />
+            <input
+                type="file"
+                accept="image/png, image/gif, image/jpeg"
+                @change="previewImage"
+                class="upload-form"
+            />
             <div v-if="thumbnail" class="thumbnail-preview">
                 <img :src="thumbnail" alt="Uploaded Image" class="thumbnail" />
             </div>
@@ -55,6 +61,14 @@ defineExpose({
 .card {
     padding: 0;
     overflow: hidden;
+}
+
+.note {
+    font: small-caption;
+    color: rgb(163, 93, 196);
+    margin-bottom: 5px;
+    color: #6e5aa5;
+    font-weight: bolder;
 }
 
 .thumbnail-preview {
