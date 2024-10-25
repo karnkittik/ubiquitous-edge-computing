@@ -1,5 +1,4 @@
 <template>
-    <div>
         <h1 class="TTPD">Welcome to People Counting Services</h1>
         <p class="you-left-your-typewriter-at-my-apateu">
             This service provides counting of people using an image processing
@@ -31,7 +30,6 @@
                 />
             </div>
         </div>
-    </div>
 </template>
 
 <script setup>
